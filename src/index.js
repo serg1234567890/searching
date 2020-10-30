@@ -1,11 +1,18 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import { Provider } from 'react-redux'
+import { store } from './AppStore'
+import App from './App'
 
-const title = 'My Minimal React Webpack Babel Setup.';
+import registerServiceWorker from './registerServiceWorker'
+
+import './index.css'
 
 ReactDOM.render(
-  <div>{title}</div>,
-  document.getElementById('app')
-);
-
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById('root')
+)
 module.hot.accept();
+registerServiceWorker();
