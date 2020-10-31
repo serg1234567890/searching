@@ -1,25 +1,19 @@
 import {
-  GET_PHOTOS_REQUEST,
-  GET_PHOTOS_SUCCESS,
-  GET_PHOTOS_FAIL,
+  SAVE_SUBMISSIONS_REQUEST,
+  SAVE_SUBMISSIONS_SUCCESS,
+  SAVE_SUBMISSIONS_FAIL,
 } from './Actions'
 
-const initialState = {
-  year: 2018,
-  photos: [],
-  isFetching: false,
-  error: '',
-}
-
 export function pageReducer(state = initialState, action) {
+  console.log('OK')  
   switch (action.type) {
-    case GET_PHOTOS_REQUEST:
-      return { ...state, year: action.payload, isFetching: true, error: '' }
+    case SAVE_SUBMISSIONS_REQUEST:
+      return { ...state, isFetching: true, error: '' }
 
-    case GET_PHOTOS_SUCCESS:
-      return { ...state, photos: action.payload, isFetching: false, error: '' }
+    case SAVE_SUBMISSIONS_SUCCESS:
+      return { ...state, controls: action.payload, isFetching: false, error: '' }
 
-    case GET_PHOTOS_FAIL:
+    case SAVE_SUBMISSIONS_FAIL:
       return { ...state, error: action.payload.message, isFetching: false }
 
     default:

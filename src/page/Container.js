@@ -1,18 +1,16 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Page } from './Page'
-import { getPhotos } from './Actions'
+import { saveSubmissions } from './Actions'
 
 class PageContainer extends React.Component {
   render() {
-    const { page, getPhotos } = this.props
+    const { page, saveSubmissions } = this.props
     return (
       <Page
-        photos={page.photos}
-        year={page.year}
         isFetching={page.isFetching}
         error={page.error}
-        getPhotos={getPhotos}
+        saveSubmissions={saveSubmissions}
       />
     )
   }
@@ -26,7 +24,7 @@ const mapStateToProps = store => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getPhotos: year => dispatch(getPhotos(year)),
+    saveSubmissions: () => dispatch(saveSubmissions()),
   }
 }
 

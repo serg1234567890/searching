@@ -11,3 +11,5 @@ npm install redux-thunk
 npm install --save-dev redux-logger
 npm install --save-dev style-loader css-loader
 npm install --save-dev @babel/plugin-proposal-class-properties
+npm install react-redux-form
+npm install --save-dev @babel/plugin-transform-runtime
