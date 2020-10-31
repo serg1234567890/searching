@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Page } from './Page'
-import { saveSubmissions } from './Actions'
+import { actions } from './Actions'
 
 class PageContainer extends React.Component {
   render() {
@@ -24,7 +24,7 @@ const mapStateToProps = store => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    saveSubmissions: () => dispatch(saveSubmissions()),
+    saveSubmissions: () => dispatch(actions),
   }
 }
 

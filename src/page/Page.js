@@ -32,7 +32,9 @@ export class Page extends React.Component {
     )
   }
   renderTemplate = () => {
-    const { isFetching, error } = this.props
+    const { controls, isFetching, error } = this.props
+
+    console.log(controls);
 
     if (error) {
       return <p className="error">Error loading</p>
@@ -41,7 +43,13 @@ export class Page extends React.Component {
     if (isFetching) {
       return <p>Loading...</p>
     } else {
-      return <p>Loaded</p>
+      return 
+        <div>
+          {controls.map(order =>
+          <div key={order.Id}>
+              <div>{order.Name}</div>
+          </div>)}
+        </div>
     }
   }
 
@@ -58,6 +66,7 @@ export class Page extends React.Component {
 
 Page.propTypes = {
   saveSubmissions: PropTypes.func.isRequired,
+  controls: PropTypes.any,
   error: PropTypes.string,
   isFetching: PropTypes.bool.isRequired,
 }
