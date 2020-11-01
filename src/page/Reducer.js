@@ -19,7 +19,9 @@ export const initialPageState = {
 }
 
 export function pageReducer(state = initialPageState, action) {
-  console.log('ok')
+  console.log('Reducer')
+  console.log(action.type)
+  console.log(action.payload)
 
   switch (action.type) {
     case SAVE_SUBMISSIONS_REQUEST:

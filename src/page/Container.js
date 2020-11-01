@@ -18,13 +18,14 @@ class PageContainer extends React.Component {
 }
 
 const mapStateToProps = store => {
+  console.log(store)
   return {
     page: store.page,
   }
 }
 
 const mapDispatchToProps = dispatch => {
-  console.log('map')
+  console.log('mapdispatch')
   return {
     onSubmitClick: () => dispatch(onSubmitClick()),
   }

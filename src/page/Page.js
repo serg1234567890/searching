@@ -12,6 +12,11 @@ export class Page extends React.Component {
   renderButton = () => {
 
     return (
+      <div>
+        <Control.text model="page.singlelinetext" id="page.singlelinetext" />
+        <button className="btn" onClick={this.onBtnClick}>Save</button>
+      </div>
+      /*
       <div model="page" >
         <Control.text model="page.singlelinetext" id="page.singlelinetext" />
         <Control.textarea model="page.multiplelinetext" id="page.multiplelinetext" />
@@ -30,12 +35,12 @@ export class Page extends React.Component {
         <button className="btn" onClick={this.onBtnClick}>Save</button>
 
       </div>
-    )
+      */
+     
+     )
   }
   renderTemplate = () => {
     const { controls, isFetching, error } = this.props
-
-    console.log('render');
 
     if (error) {
       return <p className="error">Error loading</p>
@@ -44,20 +49,18 @@ export class Page extends React.Component {
     if (isFetching) {
       return <p>Loading...</p>
     } else {
-      return 
-        <div>
-          {controls.map(order =>
-          <div key={order.Id}>
-              <div>{order.Name}</div>
-          </div>)}
-        </div>
+      return <div>{controls.map(order => <div key={order.id}>{order.name}</div>)}</div>
     }
   }
 
   render() {
+    const { controls, isFetching, error } = this.props
+
+    console.log('isFetching ' + isFetching);
+    console.log(controls);
 
     return (
-      <div className="ib page">
+      <div className="page">
         {this.renderTemplate()}
         {this.renderButton()}
       </div>
