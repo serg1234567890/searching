@@ -19,7 +19,8 @@ export const initialPageState = {
 }
 
 export function pageReducer(state = initialPageState, action) {
-  console.log('OK')  
+  console.log('ok')
+
   switch (action.type) {
     case SAVE_SUBMISSIONS_REQUEST:
       return { ...state, isFetching: true, error: '' }

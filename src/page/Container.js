@@ -1,16 +1,17 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Page } from './Page'
-import { actions } from './Actions'
+import { onSubmitClick } from './Actions'
 
 class PageContainer extends React.Component {
   render() {
-    const { page, saveSubmissions } = this.props
+    const { page, onSubmitClick } = this.props
     return (
       <Page
+        controls={page.controls}
         isFetching={page.isFetching}
         error={page.error}
-        saveSubmissions={saveSubmissions}
+        onSubmitClick={onSubmitClick}
       />
     )
   }
@@ -23,8 +24,9 @@ const mapStateToProps = store => {
 }
 
 const mapDispatchToProps = dispatch => {
+  console.log('map')
   return {
-    saveSubmissions: () => dispatch(actions),
+    onSubmitClick: () => dispatch(onSubmitClick()),
   }
 }
 

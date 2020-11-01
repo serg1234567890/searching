@@ -4,12 +4,12 @@ export const SAVE_SUBMISSIONS_FAIL = 'SAVE_SUBMISSIONS_FAIL'
 
 import { services } from '../services/services';
 
-export const actions = {
-  saveSubmissions: () => (dispatch, getState) => {  
 
+export function onSubmitClick() {
+  return (dispatch, getState) => {  
     dispatch({ type: SAVE_SUBMISSIONS_REQUEST });
 
-    console.log('saveSubmissions');
+    console.log('onSubmitClick');
     services.validate(getState().page);
 
     services.get('api/values/list')

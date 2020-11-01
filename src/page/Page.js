@@ -4,8 +4,9 @@ import { Control } from 'react-redux-form';
 
 export class Page extends React.Component {
 
-  onBtnClick = e => {
-    this.props.saveSubmissions()
+  onBtnClick = () => {
+    console.log('click')
+    this.props.onSubmitClick()
   }
 
   renderButton = () => {
@@ -34,7 +35,7 @@ export class Page extends React.Component {
   renderTemplate = () => {
     const { controls, isFetching, error } = this.props
 
-    console.log(controls);
+    console.log('render');
 
     if (error) {
       return <p className="error">Error loading</p>
@@ -54,7 +55,7 @@ export class Page extends React.Component {
   }
 
   render() {
-    //const { year, photos } = this.props
+
     return (
       <div className="ib page">
         {this.renderTemplate()}
@@ -65,8 +66,9 @@ export class Page extends React.Component {
 }
 
 Page.propTypes = {
-  saveSubmissions: PropTypes.func.isRequired,
   controls: PropTypes.any,
+  onSubmitClick: PropTypes.func.isRequired,
   error: PropTypes.string,
   isFetching: PropTypes.bool.isRequired,
 }
+
