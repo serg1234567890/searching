@@ -1,17 +1,19 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Page } from './Page'
-import { onSubmitClick } from './Actions'
+import { onSubmitClick, addControl } from './Actions'
 
 class PageContainer extends React.Component {
   render() {
-    const { page, onSubmitClick } = this.props
+    const { page, onSubmitClick, addControl } = this.props
     return (
       <Page
+        controltype={page.controltype}
         controls={page.controls}
         isFetching={page.isFetching}
         error={page.error}
         onSubmitClick={onSubmitClick}
+        addControl={addControl}
       />
     )
   }
@@ -28,6 +30,7 @@ const mapDispatchToProps = dispatch => {
   console.log('mapdispatch')
   return {
     onSubmitClick: () => dispatch(onSubmitClick()),
+    addControl: () => dispatch(addControl())
   }
 }
 

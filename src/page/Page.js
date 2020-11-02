@@ -2,19 +2,36 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Control } from 'react-redux-form';
 
+const ControlText = (id) => {
+  return <Control.text model={id} id={id} />
+}
+
 export class Page extends React.Component {
 
-  onBtnClick = () => {
-    console.log('click')
+  onSubmitClick = () => {
+    console.log('click save')
     this.props.onSubmitClick()
+  }
+  onAddClick = () => {
+    console.log('click add')
+    this.props.addControl()
   }
 
   renderButton = () => {
 
     return (
-      <div>
+      <div model="page">
         <Control.text model="page.singlelinetext" id="page.singlelinetext" />
-        <button className="btn" onClick={this.onBtnClick}>Save</button>
+        <Control.select model="controltype" id="controltype" >
+            <option value="text">text</option>
+            <option value="textarea">textarea</option>
+            <option value="select">select</option>
+            <option value="date">date</option>
+            <option value="radio">radio</option>
+            <option value="checkbox">checkbox</option>
+        </Control.select>
+        <button className="btn" onClick={this.onAddClick}>Add</button>
+        <button className="btn" onClick={this.onSubmitClick}>Save</button>
       </div>
       /*
       <div model="page" >
@@ -49,7 +66,8 @@ export class Page extends React.Component {
     if (isFetching) {
       return <p>Loading...</p>
     } else {
-      return <div>{controls.map(order => <div key={order.id}>{order.name}</div>)}</div>
+      return <div>
+        </div>
     }
   }
 
@@ -69,7 +87,9 @@ export class Page extends React.Component {
 }
 
 Page.propTypes = {
+  controltype: PropTypes.string,
   controls: PropTypes.any,
+  addControl: PropTypes.func.isRequired,
   onSubmitClick: PropTypes.func.isRequired,
   error: PropTypes.string,
   isFetching: PropTypes.bool.isRequired,

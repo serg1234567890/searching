@@ -2,10 +2,19 @@ export const SAVE_SUBMISSIONS_REQUEST = 'SAVE_SUBMISSIONS_REQUEST'
 export const SAVE_SUBMISSIONS_SUCCESS = 'SAVE_SUBMISSIONS_SUCCESS'
 export const SAVE_SUBMISSIONS_FAIL = 'SAVE_SUBMISSIONS_FAIL'
 export const VALIDATION_FAIL = 'VALIDATION_FAIL'
+export const ADD_CONTROL = 'ADD_CONTROL'
 
 import { Httpservice } from '../services/Httpservice';
 import { Validation } from '../services/Validation';
 
+export function addControl() {
+  return (dispatch, getState) => {  
+    console.log('addControl ' + getState().page);
+    
+    var page = getState().page;
+    dispatch({ type: ADD_CONTROL, payload: page.controltype });
+  }
+}
 
 export function onSubmitClick() {
   return (dispatch, getState) => {  

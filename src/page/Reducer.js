@@ -2,6 +2,9 @@ import {
   SAVE_SUBMISSIONS_REQUEST,
   SAVE_SUBMISSIONS_SUCCESS,
   SAVE_SUBMISSIONS_FAIL,
+  VALIDATION_FAIL,
+  ADD_CONTROL
+
 } from './Actions'
 
 export const initialPageState = {
@@ -13,6 +16,7 @@ export const initialPageState = {
   checkbox: true,
   checkbox2: false,
 
+  controltype: 'text',
   controls: [],
   isFetching: false,
   error: ''
@@ -32,6 +36,9 @@ export function pageReducer(state = initialPageState, action) {
 
     case SAVE_SUBMISSIONS_FAIL:
       return { ...state, error: action.payload.message, isFetching: false }
+
+      case ADD_CONTROL:
+      return { ...state, controltype: action.payload, isFetching: false }
 
     default:
       return state
