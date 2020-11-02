@@ -9,10 +9,11 @@ import { Validation } from '../services/Validation';
 
 export function addControl() {
   return (dispatch, getState) => {  
-    console.log('addControl ' + getState().page);
+    console.log('addControl ');
     
     var page = getState().page;
-    dispatch({ type: ADD_CONTROL, payload: page.controltype });
+    console.log('addControl size + ' + page.controls.length);
+    dispatch({ type: ADD_CONTROL, payload: page.controls.length });
   }
 }
 

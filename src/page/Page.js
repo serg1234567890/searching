@@ -1,10 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Control } from 'react-redux-form';
+import { Control, Field } from 'react-redux-form';
+import { Submission } from './Submission';
 
-const ControlText = (id) => {
-  return <Control.text model={id} id={id} />
-}
 
 export class Page extends React.Component {
 
@@ -13,16 +11,18 @@ export class Page extends React.Component {
     this.props.onSubmitClick()
   }
   onAddClick = () => {
-    console.log('click add')
+    console.log('click add ' + this.props.controltype)
     this.props.addControl()
   }
 
   renderButton = () => {
+    const { controltype, singlelinetext } = this.props
 
     return (
       <div model="page">
-        <Control.text model="page.singlelinetext" id="page.singlelinetext" />
-        <Control.select model="controltype" id="controltype" >
+        <a>{controltype}</a>
+        <Field model="field1"><label>First name:</label><Control.text model="singlelinetext" id="singlelinetext" /></Field>
+        <Control.select model="page.controltype" id="page.controltype" >
             <option value="text">text</option>
             <option value="textarea">textarea</option>
             <option value="select">select</option>
@@ -30,18 +30,22 @@ export class Page extends React.Component {
             <option value="radio">radio</option>
             <option value="checkbox">checkbox</option>
         </Control.select>
+        <Control.radio model="page.radio" id="page.radio" value="1" />
+        <Control.radio model="page.radio" id="page.radio" value="2" />
+
         <button className="btn" onClick={this.onAddClick}>Add</button>
         <button className="btn" onClick={this.onSubmitClick}>Save</button>
+        <button type="submit">Submit (check console)</button>
       </div>
       /*
       <div model="page" >
         <Control.text model="page.singlelinetext" id="page.singlelinetext" />
         <Control.textarea model="page.multiplelinetext" id="page.multiplelinetext" />
         <Control.select model="page.dropdown" id="page.dropdown" >
-            <option value="1">Grapefruit</option>
-            <option value="2">Lime</option>
-            <option value="3">Coconut</option>
-            <option value="4">Mango</option>
+            <option value="1">value 1</option>
+            <option value="2">value 2</option>
+            <option value="3">value 3</option>
+            <option value="4">value 4</option>
         </Control.select>
         <Control.text model="page.date" id="page.date" />
         <Control.radio model="page.radio" id="page.radio" value="1" />
@@ -58,7 +62,6 @@ export class Page extends React.Component {
   }
   renderTemplate = () => {
     const { controls, isFetching, error } = this.props
-
     if (error) {
       return <p className="error">Error loading</p>
     }
@@ -67,6 +70,10 @@ export class Page extends React.Component {
       return <p>Loading...</p>
     } else {
       return <div>
+        {controls.map(control =>
+                    <Submission model='searching' 
+                    key={control.id} type={control.type} modelname={control.name} id={control.id} />
+                )}        
         </div>
     }
   }
