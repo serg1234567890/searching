@@ -1,37 +1,39 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Control, Field, ReduxField } from 'react-redux-form';
+import Form from 'react-bootstrap/Form';
 
 export class Submission extends Component {
-    render() {
+
+      render() {
         const { type, modelname, id, value, changeInputAction } = this.props
         const controlname = type + id;
         const onChangeRadio = e => { changeInputAction(e.target.name, e.target.value); }    
         const onChangeCheckbox = e => { changeInputAction(e.target.name, e.target.checked); }    
-    
+
         if(type == 'text') {
             return (<div key={controlname}><label>{modelname}</label>
-            <Control.text model={modelname} />
+            <Form.Control type='text' model={modelname} />
             </div>)
         }
         else if(type == 'textarea') {
             return (<div key={controlname}><label>{modelname}</label>
-            <Control.textarea model={modelname} />
+            <Form.Control as="textarea" rows={3} model={modelname} />
             </div>)
         }
         else if(type == 'select') {
             return (<div key={controlname}><label>{modelname}
-                <Control.select model={modelname}>
-                    <option value="1">value 1</option>
+                <Form.Control as="select" model={modelname}>
+                    <option value="1">this is value 1 of the select control</option>
                     <option value="2">value 2</option>
                     <option value="3">value 3</option>
                     <option value="4">value 4</option>
-                </Control.select>
+                </Form.Control>
             </label></div>)
         }
         else if(type == 'date') {
             return (<div key={controlname}><label>{modelname}</label>
-            <Control.text model={modelname} />
+                <Form.Control type='text' model={modelname} />
             </div>)
         }
         else if(type == 'radio') {
