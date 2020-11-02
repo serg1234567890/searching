@@ -7,6 +7,14 @@ export const ADD_CONTROL = 'ADD_CONTROL'
 import { Httpservice } from '../services/Httpservice';
 import { Validation } from '../services/Validation';
 
+export function changeInputAction(name, value) {
+  return (dispatch, getState) => {  
+    console.log('changeInputAction ' + value);
+    
+    dispatch({ type: 'rrf/change', model: name, payload: value });
+  }
+}
+
 export function addControl() {
   return (dispatch, getState) => {  
     console.log('addControl ');

@@ -72,11 +72,16 @@ export class Page extends React.Component {
       return <div>
         {controls.map(control =>
                     <Submission model='searching' 
-                    key={control.id} type={control.type} modelname={control.name} id={control.id} />
+                    key={control.id} type={control.type} modelname={control.name} id={control.id}
+                     changeInputAction={this.changeInputAction} />
                 )}        
         </div>
     }
   }
+  changeInputAction = (name, value) => { 
+    console.log(name + ' ' + value);
+    this.props.changeInputAction(name, value);
+}    
 
   render() {
     const { controls, isFetching, error } = this.props
@@ -100,5 +105,6 @@ Page.propTypes = {
   onSubmitClick: PropTypes.func.isRequired,
   error: PropTypes.string,
   isFetching: PropTypes.bool.isRequired,
+  changeInputAction: PropTypes.func.isRequired,
 }
 

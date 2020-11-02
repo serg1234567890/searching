@@ -4,11 +4,10 @@ import { Control, Field, ReduxField } from 'react-redux-form';
 
 export class Submission extends Component {
     render() {
-        const { type, modelname, id, value } = this.props
+        const { type, modelname, id, value, changeInputAction } = this.props
         const controlname = type + id;
-        const onChange = value => {
-            console.log(value)
-        }    
+        const onChangeRadio = e => { changeInputAction(e.target.name, e.target.value); }    
+        const onChangeCheckbox = e => { changeInputAction(e.target.name, e.target.checked); }    
     
         if(type == 'text') {
             return (<div key={controlname}><label>{modelname}</label>
@@ -37,13 +36,13 @@ export class Submission extends Component {
         }
         else if(type == 'radio') {
             return (<div key={controlname}><label>{modelname}</label>
-                <Control.radio model={modelname} name={modelname} value='1' ></Control.radio>
-                <Control.radio model={modelname} name={modelname} valus='2' ></Control.radio>
+                <input type='radio' model={modelname} name={modelname} value='on' onChange={(e) => onChangeRadio(e)} />
+                <input type='radio' model={modelname} name={modelname} value='off' onChange={(e) => onChangeRadio(e)} />
             </div>)
         }
         else if(type == 'checkbox') {
             return (<div key={controlname}><label className="form-check-label">{modelname}</label>
-                <Control.checkbox model={modelname} name={modelname} value={value}/>
+                <input type='checkbox' model={modelname} name={modelname} value={value} onChange={(e) => onChangeCheckbox(e)} />
                 </div>)
         }
         else return(<Field><a>Empty</a></Field>)
@@ -53,4 +52,5 @@ Submission.propTypes = {
     type: PropTypes.string,
     modelname: PropTypes.string,
     id: PropTypes.number,
-  }
+    changeInputAction: PropTypes.func.isRequired,
+}

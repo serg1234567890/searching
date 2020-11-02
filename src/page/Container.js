@@ -1,11 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Page } from './Page'
-import { onSubmitClick, addControl } from './Actions'
+import { onSubmitClick, addControl, changeInputAction } from './Actions'
 
 class PageContainer extends React.Component {
   render() {
-    const { page, onSubmitClick, addControl } = this.props
+    const { page, onSubmitClick, addControl, changeInputAction } = this.props
     return (
       <Page
         controltype={page.controltype}
@@ -14,6 +14,7 @@ class PageContainer extends React.Component {
         error={page.error}
         onSubmitClick={onSubmitClick}
         addControl={addControl}
+        changeInputAction={changeInputAction}
       />
     )
   }
@@ -30,7 +31,8 @@ const mapDispatchToProps = dispatch => {
   console.log('mapdispatch')
   return {
     onSubmitClick: () => dispatch(onSubmitClick()),
-    addControl: () => dispatch(addControl())
+    addControl: () => dispatch(addControl()),
+    changeInputAction: (name, value) => dispatch(changeInputAction(name, value))
   }
 }
 
