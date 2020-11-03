@@ -14,4 +14,4 @@ npm install --save-dev @babel/plugin-proposal-class-properties
 npm install react-redux-form
 npm install --save-dev @babel/plugin-transform-runtime
 npm install react-bootstrap bootstrap
-npm i @material-ui/pickers
+npm install react-datepicker --save

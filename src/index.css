@@ -35,3 +35,6 @@ body {
 ol, ul {
   list-style: none;
 }
+.datepicker{
+  width: 100%;
+}

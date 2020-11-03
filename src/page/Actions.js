@@ -9,7 +9,7 @@ import { Validation } from '../services/Validation';
 
 export function changeInputAction(name, value) {
   return (dispatch, getState) => {  
-    console.log('changeInputAction ' + value);
+    console.log('changeInputAction ' + name + ' ' + value);
     
     dispatch({ type: 'rrf/change', model: name, payload: value });
   }

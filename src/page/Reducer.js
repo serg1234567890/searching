@@ -48,14 +48,14 @@ export function pageReducer(state = initialPageState, action) {
         ], isFetching: false }
 
     case 'rrf/change':
-      console.log('Change ' + action.model + ' ' + action.value)
+      console.log('Change ' + action.model + ' ' + action.payload)
       if(action.model == 'page.controltype')
       {
-        return { ...state, controltype: action.value, isFetching: false }
+        return { ...state, controltype: action.payload, isFetching: false }
       }
       else if(action.model == 'page.radio')
       {
-        return { ...state, radio: action.value, isFetching: false }
+        return { ...state, radio: action.payload, isFetching: false }
       }
 
     default:
