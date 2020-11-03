@@ -13,7 +13,7 @@ export class Submission extends Component {
     };
     render() {
         const { startDate } = this.state;
-        const { type, modelname, id, changeInputAction, removeInputAction } = this.props
+        const { type, modelname, id, value, changeInputAction, removeInputAction } = this.props
         const controlname = type + id;
         const onChangeRadio = e => { changeInputAction(e.target.name, e.target.value); }    
         const onChangeCheckbox = e => { changeInputAction(e.target.name, e.target.checked); }    
@@ -22,7 +22,13 @@ export class Submission extends Component {
         const onChangeDate = (model, startDate, event) => {
             //console.log(model.modelname, startDate, event);
             this.setState({ startDate });
-            changeInputAction(model.modelname, startDate);
+            if(startDate!=null)
+            {
+                var d = new Date(startDate);
+                var s = ''+d.getDate()+d.getMonth()+d.getFullYear();
+                console.log('Action date ' +s)
+                changeInputAction(model.modelname, s);
+            }
         };    
         const onRemove = (model) => { removeInputAction(model.modelname); }    
     
@@ -32,7 +38,7 @@ export class Submission extends Component {
                 <InputGroup.Prepend>
                 <InputGroup.Text>{modelname}</InputGroup.Text>
                 </InputGroup.Prepend>
-                <Form.Control type='text' model={modelname} name={modelname} onChange={(e) => onChangeText(e)} />
+                <Form.Control type='text' model={modelname} name={modelname} value={value?value:''} onChange={(e) => onChangeText(e)} />
                 <InputGroup.Append>
                     <Button variant="outline-secondary" onClick={(e) => onRemove({modelname})}>Remove</Button>
                 </InputGroup.Append>
@@ -45,7 +51,7 @@ export class Submission extends Component {
                 <InputGroup.Prepend>
                 <InputGroup.Text>{modelname}</InputGroup.Text>
                 </InputGroup.Prepend>
-                <Form.Control as="textarea" rows={3} model={modelname} name={modelname} onChange={(e) => onChangeText(e)}/>
+                <Form.Control as="textarea" rows={3} model={modelname} name={modelname} value={value?value:''} onChange={(e) => onChangeText(e)}/>
                 <InputGroup.Append>
                     <Button variant="outline-secondary" onClick={(e) => onRemove({modelname})}>Remove</Button>
                 </InputGroup.Append>
@@ -58,7 +64,7 @@ export class Submission extends Component {
                 <InputGroup.Prepend>
                 <InputGroup.Text>{modelname}</InputGroup.Text>
                 </InputGroup.Prepend>
-                <Form.Control as="select" model={modelname} name={modelname} onChange={(e) => onChangeSelect(e)}>
+                <Form.Control as="select" model={modelname} name={modelname} value={value?value:'0'} onChange={(e) => onChangeSelect(e)}>
                     <option value="0"></option>
                     <option value="1">this is value 1 of the select control</option>
                     <option value="2">value 2</option>
@@ -77,7 +83,8 @@ export class Submission extends Component {
                 <InputGroup.Prepend>
                 <InputGroup.Text>{modelname}</InputGroup.Text>
                 </InputGroup.Prepend>
-                <DatePicker className='form-control datepicker' selected={startDate} onChange={(date, event) => onChangeDate({modelname}, date, event)} />
+                <DatePicker className='form-control datepicker' dateFormat="dd.MM.yyyy"
+                    selected={value} onChange={(date, event) => onChangeDate({modelname}, date, event)} />
                 <InputGroup.Append>
                     <Button variant="outline-secondary" onClick={(e) => onRemove({modelname})}>Remove</Button>
                 </InputGroup.Append>
@@ -90,7 +97,7 @@ export class Submission extends Component {
                 <InputGroup.Prepend>
                 <InputGroup.Text>{modelname}</InputGroup.Text>
                 </InputGroup.Prepend>
-                <Form.Check type='radio' className='checkboxradio' model={modelname} name={modelname} value='on' onChange={(e) => onChangeRadio(e)} />
+                <Form.Check type='radio' className='checkboxradio' model={modelname} name={modelname} value='on' checked={value?value=='on':false} onChange={(e) => onChangeRadio(e)} />
                 <Form.Control type='text' value='on' readOnly/>
                 <InputGroup.Append>
                     <Button variant="outline-secondary" onClick={(e) => onRemove({modelname})}>Remove</Button>
@@ -100,7 +107,7 @@ export class Submission extends Component {
                 <InputGroup.Prepend>
                 <InputGroup.Text>{modelname}</InputGroup.Text>
                 </InputGroup.Prepend>
-                <Form.Check  type='radio' className='checkboxradio' model={modelname} name={modelname} value='off' onChange={(e) => onChangeRadio(e)} />
+                <Form.Check  type='radio' className='checkboxradio' model={modelname} name={modelname} value='off' checked={value?value=='off':false} onChange={(e) => onChangeRadio(e)} />
                 <Form.Control type='text' value='off' readOnly/>
                 <InputGroup.Append>
                     <Button variant="outline-secondary" onClick={(e) => onRemove({modelname})}>Remove</Button>
@@ -114,10 +121,10 @@ export class Submission extends Component {
                 <InputGroup.Prepend>
                 <InputGroup.Text>{modelname}</InputGroup.Text>
                 </InputGroup.Prepend>
-                <Form.Check type='checkbox' className='checkboxradio' model={modelname} name={modelname} value='vote1' onChange={(e) => onChangeCheckbox(e)} />
+                <Form.Check type='checkbox' className='checkboxradio' model={modelname} name={modelname} checked={value} value='vote1' onChange={(e) => onChangeCheckbox(e)} />
                 <Form.Control type='text' readOnly/>
                 <InputGroup.Append>
-                    <Button variant="outline-secondary">Button</Button>
+                    <Button variant="outline-secondary" onClick={(e) => onRemove({modelname})}>Remove</Button>
                 </InputGroup.Append>
             </InputGroup>
             </div>)
@@ -129,6 +136,7 @@ Submission.propTypes = {
     type: PropTypes.string,
     modelname: PropTypes.string,
     id: PropTypes.number,
+    value: PropTypes.any,
     changeInputAction: PropTypes.func.isRequired,
     removeInputAction: PropTypes.func.isRequired,
 }

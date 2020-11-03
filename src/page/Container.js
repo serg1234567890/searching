@@ -1,11 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Page } from './Page'
-import { onSubmitClick, addControl, changeInputAction, removeInputAction } from './Actions'
+import { onSubmitClick, addControl, changeInputAction, removeInputAction, getControls } from './Actions'
 
 class PageContainer extends React.Component {
   render() {
-    const { page, onSubmitClick, addControl, changeInputAction, removeInputAction } = this.props
+    const { page, onSubmitClick, addControl, changeInputAction, removeInputAction, getControls } = this.props
     return (
       <Page
         controltype={page.controltype}
@@ -17,23 +17,23 @@ class PageContainer extends React.Component {
         addControl={addControl}
         changeInputAction={changeInputAction}
         removeInputAction={removeInputAction}
+        getControls={getControls}
       />
     )
   }
 }
 
 const mapStateToProps = store => {
-  //console.log(store)
   return {
     page: store.page,
   }
 }
 
 const mapDispatchToProps = dispatch => {
-  //console.log('mapdispatch')
   return {
     onSubmitClick: () => dispatch(onSubmitClick()),
     addControl: () => dispatch(addControl()),
+    getControls: () => dispatch(getControls()),
     changeInputAction: (name, value) => dispatch(changeInputAction(name, value)),
     removeInputAction: (name) => dispatch(removeInputAction(name))
   }

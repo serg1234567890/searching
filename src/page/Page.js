@@ -8,19 +8,19 @@ import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 
 export class Page extends React.Component {
+  componentDidMount() {
+    this.props.getControls();
+  }
   changeInputAction = (name, value) => { 
-    //console.log(name + ' ' + value);
     this.props.changeInputAction(name, value);
   }    
   removeInputAction = (name) => { 
     this.props.removeInputAction(name);
   }    
   onSubmitClick = () => {
-    console.log('click save')
     this.props.onSubmitClick()
   }
   onAddClick = () => {
-    console.log('click add ' + this.props.controltype)
     this.props.addControl()
   }
 
@@ -31,10 +31,7 @@ export class Page extends React.Component {
     return (
       <div model="page">
         <InputGroup>
-          <InputGroup.Prepend>
-            <InputGroup.Text>{controltype}</InputGroup.Text>
-            </InputGroup.Prepend>
-          <Form.Control type='text' value='' readOnly ></Form.Control>
+          <Form.Control type='text' value={controltype} readOnly ></Form.Control>
         </InputGroup>
         <InputGroup>
             <InputGroup.Prepend>
@@ -65,14 +62,28 @@ export class Page extends React.Component {
       return <p>Loading...</p>
     } else {
       return <Container fluid><hr/>
-          <Button className="btn" onClick={this.onSubmitClick}>Save</Button>
+          <Button className="btn" onClick={this.onSubmitClick}>Restore default</Button>
           {controls.map(control =>
                     <Submission model='searching' 
-                    key={control.id} type={control.type} modelname={control.name} id={control.id}
+                    key={control.id} type={control.type} modelname={control.name} id={control.id} value={this.convertValue(control.type, control.value)}
                      changeInputAction={this.changeInputAction} removeInputAction={this.removeInputAction} />
                 )}
         </Container>
     }
+  }
+  convertValue(type, value){
+    if(value==null) return;
+    if(type=='date') {
+      const day = value.substr(0, 2)
+      const month = value.substr(2, 2) - 1
+      const year = value.substr(4, 4)
+      var date = new Date(year, month, day)
+      return date
+    }
+    else if(type=='checkbox') {
+      return value == 'true';
+    }
+    else return value
   }
   render() {
     const { controls, isFetching, error } = this.props
@@ -99,5 +110,6 @@ Page.propTypes = {
   isFetching: PropTypes.bool.isRequired,
   changeInputAction: PropTypes.func.isRequired,
   removeInputAction: PropTypes.func.isRequired,
+  getControls: PropTypes.func.isRequired
 }
 
