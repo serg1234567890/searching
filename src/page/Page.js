@@ -8,7 +8,13 @@ import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 
 export class Page extends React.Component {
-
+  changeInputAction = (name, value) => { 
+    //console.log(name + ' ' + value);
+    this.props.changeInputAction(name, value);
+  }    
+  removeInputAction = (name) => { 
+    this.props.removeInputAction(name);
+  }    
   onSubmitClick = () => {
     console.log('click save')
     this.props.onSubmitClick()
@@ -20,7 +26,7 @@ export class Page extends React.Component {
 
   renderButton = () => {
     const { controltype, singlelinetext } = this.props
-    const onChangeSelect = e => { console.log(e.target.value); this.changeInputAction(e.target.name, e.target.value); }    
+    const onChangeSelect = e => { this.changeInputAction(e.target.name, e.target.value); }    
 
     return (
       <div model="page">
@@ -63,16 +69,11 @@ export class Page extends React.Component {
           {controls.map(control =>
                     <Submission model='searching' 
                     key={control.id} type={control.type} modelname={control.name} id={control.id}
-                     changeInputAction={this.changeInputAction} />
+                     changeInputAction={this.changeInputAction} removeInputAction={this.removeInputAction} />
                 )}
         </Container>
     }
   }
-  changeInputAction = (name, value) => { 
-    console.log(name + ' ' + value);
-    this.props.changeInputAction(name, value);
-  }    
-
   render() {
     const { controls, isFetching, error } = this.props
 
@@ -91,10 +92,12 @@ export class Page extends React.Component {
 Page.propTypes = {
   controltype: PropTypes.string,
   controls: PropTypes.any,
+  lastindex: PropTypes.number,
   addControl: PropTypes.func.isRequired,
   onSubmitClick: PropTypes.func.isRequired,
   error: PropTypes.string,
   isFetching: PropTypes.bool.isRequired,
   changeInputAction: PropTypes.func.isRequired,
+  removeInputAction: PropTypes.func.isRequired,
 }
 

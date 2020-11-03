@@ -19,6 +19,7 @@ export const initialPageState = {
 
   controltype: 'text',
   controls: [],
+  lastindex: 0,
   isFetching: false,
   error: ''
 }
@@ -42,7 +43,18 @@ export function pageReducer(state = initialPageState, action) {
       return { ...state, controls: 
         [...state.controls, 
           {'id':action.payload, 'name':'field'+action.payload, 'type':state.controltype, 'value':null}
-        ], isFetching: false }
+        ], lastindex: action.payload + 1, isFetching: false }
+
+    case 'REMOVE_INPUT':
+      console.log('REMOVE_INPUT ' + action.model + ' ' + action.payload)
+      for(var i=0; i<state.controls.length; i++)
+      {
+        if(action.model == state.controls[i].name) {
+          state.controls.splice(i, 1);
+          return { ...state, isFetching: false }
+        }
+      }
+      return { ...state, isFetching: false }
 
     case 'CHANGE_INPUT':
       console.log('CHANGE_INPUT ' + action.model + ' ' + action.payload)
@@ -58,7 +70,6 @@ export function pageReducer(state = initialPageState, action) {
             //console.log('Control ' + control.name + ': ' + control.value);
           }
         });
-
         return { ...state, isFetching: false }
       }
 

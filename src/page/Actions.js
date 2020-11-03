@@ -15,13 +15,20 @@ export function changeInputAction(name, value) {
   }
 }
 
+export function removeInputAction(name) {
+  return (dispatch, getState) => {  
+    console.log('removeInputAction ' + name);
+    
+    dispatch({ type: 'REMOVE_INPUT', model: name });
+  }
+}
+
 export function addControl() {
   return (dispatch, getState) => {  
-    console.log('addControl ');
-    
     var page = getState().page;
-    console.log('addControl size + ' + page.controls.length);
-    dispatch({ type: ADD_CONTROL, payload: page.controls.length });
+
+    console.log('addControl lastindex ' + page.lastindex);
+    dispatch({ type: ADD_CONTROL, payload: page.lastindex });
   }
 }
 

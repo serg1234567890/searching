@@ -13,7 +13,7 @@ export class Submission extends Component {
     };
     render() {
         const { startDate } = this.state;
-        const { type, modelname, id, value, changeInputAction } = this.props
+        const { type, modelname, id, changeInputAction, removeInputAction } = this.props
         const controlname = type + id;
         const onChangeRadio = e => { changeInputAction(e.target.name, e.target.value); }    
         const onChangeCheckbox = e => { changeInputAction(e.target.name, e.target.checked); }    
@@ -24,6 +24,7 @@ export class Submission extends Component {
             this.setState({ startDate });
             changeInputAction(model.modelname, startDate);
         };    
+        const onRemove = (model) => { removeInputAction(model.modelname); }    
     
         if(type == 'text') {
             return (
@@ -33,7 +34,7 @@ export class Submission extends Component {
                 </InputGroup.Prepend>
                 <Form.Control type='text' model={modelname} name={modelname} onChange={(e) => onChangeText(e)} />
                 <InputGroup.Append>
-                    <Button variant="outline-secondary">Button</Button>
+                    <Button variant="outline-secondary" onClick={(e) => onRemove({modelname})}>Remove</Button>
                 </InputGroup.Append>
             </InputGroup>
             )
@@ -46,7 +47,7 @@ export class Submission extends Component {
                 </InputGroup.Prepend>
                 <Form.Control as="textarea" rows={3} model={modelname} name={modelname} onChange={(e) => onChangeText(e)}/>
                 <InputGroup.Append>
-                    <Button variant="outline-secondary">Button</Button>
+                    <Button variant="outline-secondary" onClick={(e) => onRemove({modelname})}>Remove</Button>
                 </InputGroup.Append>
             </InputGroup>
             )
@@ -65,7 +66,7 @@ export class Submission extends Component {
                     <option value="4">value 4</option>
                 </Form.Control>
                 <InputGroup.Append>
-                    <Button variant="outline-secondary">Button</Button>
+                    <Button variant="outline-secondary" onClick={() => onRemove({modelname})}>Remove</Button>
                 </InputGroup.Append>
             </InputGroup>
             )
@@ -78,7 +79,7 @@ export class Submission extends Component {
                 </InputGroup.Prepend>
                 <DatePicker className='form-control datepicker' selected={startDate} onChange={(date, event) => onChangeDate({modelname}, date, event)} />
                 <InputGroup.Append>
-                    <Button variant="outline-secondary">Button</Button>
+                    <Button variant="outline-secondary" onClick={(e) => onRemove({modelname})}>Remove</Button>
                 </InputGroup.Append>
             </InputGroup>
             )
@@ -92,7 +93,7 @@ export class Submission extends Component {
                 <Form.Check type='radio' className='checkboxradio' model={modelname} name={modelname} value='on' onChange={(e) => onChangeRadio(e)} />
                 <Form.Control type='text' value='on' readOnly/>
                 <InputGroup.Append>
-                    <Button variant="outline-secondary">Button</Button>
+                    <Button variant="outline-secondary" onClick={(e) => onRemove({modelname})}>Remove</Button>
                 </InputGroup.Append>
             </InputGroup>
             <InputGroup>
@@ -102,7 +103,7 @@ export class Submission extends Component {
                 <Form.Check  type='radio' className='checkboxradio' model={modelname} name={modelname} value='off' onChange={(e) => onChangeRadio(e)} />
                 <Form.Control type='text' value='off' readOnly/>
                 <InputGroup.Append>
-                    <Button variant="outline-secondary">Button</Button>
+                    <Button variant="outline-secondary" onClick={(e) => onRemove({modelname})}>Remove</Button>
                 </InputGroup.Append>
             </InputGroup>
             </div>)
@@ -129,4 +130,5 @@ Submission.propTypes = {
     modelname: PropTypes.string,
     id: PropTypes.number,
     changeInputAction: PropTypes.func.isRequired,
+    removeInputAction: PropTypes.func.isRequired,
 }
