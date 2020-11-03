@@ -35,6 +35,8 @@ body {
 ol, ul {
   list-style: none;
 }
-.datepicker{
-  width: 100%;
+.checkboxradio{
+  margin-top: 0.3rem;
+  margin-left: 1rem;
+  margin-right: 0.5rem;
 }

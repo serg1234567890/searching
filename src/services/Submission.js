@@ -9,7 +9,7 @@ import "./react-datepicker.css";
 
 export class Submission extends Component {
     state = {
-        startDate: new Date()
+        startDate: null //new Date()
     };
     render() {
         const { startDate } = this.state;
@@ -58,6 +58,7 @@ export class Submission extends Component {
                 <InputGroup.Text>{modelname}</InputGroup.Text>
                 </InputGroup.Prepend>
                 <Form.Control as="select" model={modelname} name={modelname} onChange={(e) => onChangeSelect(e)}>
+                    <option value="0"></option>
                     <option value="1">this is value 1 of the select control</option>
                     <option value="2">value 2</option>
                     <option value="3">value 3</option>
@@ -88,7 +89,8 @@ export class Submission extends Component {
                 <InputGroup.Prepend>
                 <InputGroup.Text>{modelname}</InputGroup.Text>
                 </InputGroup.Prepend>
-                <Form.Check type='radio' label='on' model={modelname} name={modelname} value='on' onChange={(e) => onChangeRadio(e)} />
+                <Form.Check type='radio' className='checkboxradio' model={modelname} name={modelname} value='on' onChange={(e) => onChangeRadio(e)} />
+                <Form.Control type='text' value='on' readOnly/>
                 <InputGroup.Append>
                     <Button variant="outline-secondary">Button</Button>
                 </InputGroup.Append>
@@ -97,7 +99,8 @@ export class Submission extends Component {
                 <InputGroup.Prepend>
                 <InputGroup.Text>{modelname}</InputGroup.Text>
                 </InputGroup.Prepend>
-                <Form.Check  type='radio' label='off' model={modelname} name={modelname} value='off' onChange={(e) => onChangeRadio(e)} />
+                <Form.Check  type='radio' className='checkboxradio' model={modelname} name={modelname} value='off' onChange={(e) => onChangeRadio(e)} />
+                <Form.Control type='text' value='off' readOnly/>
                 <InputGroup.Append>
                     <Button variant="outline-secondary">Button</Button>
                 </InputGroup.Append>
@@ -110,18 +113,8 @@ export class Submission extends Component {
                 <InputGroup.Prepend>
                 <InputGroup.Text>{modelname}</InputGroup.Text>
                 </InputGroup.Prepend>
-                <Form.Check type='checkbox' model={modelname} name={modelname} value={value} onChange={(e) => onChangeCheckbox(e)} />
-                <InputGroup.Text>{modelname}</InputGroup.Text>
-                <InputGroup.Append>
-                    <Button variant="outline-secondary">Button</Button>
-                </InputGroup.Append>
-            </InputGroup>
-            <InputGroup>
-                <InputGroup.Prepend>
-                <InputGroup.Text>{modelname}</InputGroup.Text>
-                </InputGroup.Prepend>
-                <Form.Check type='checkbox' model={modelname} name={modelname} value={value} onChange={(e) => onChangeCheckbox(e)} />
-                <InputGroup.Text>{modelname}</InputGroup.Text>
+                <Form.Check type='checkbox' className='checkboxradio' model={modelname} name={modelname} value='vote1' onChange={(e) => onChangeCheckbox(e)} />
+                <Form.Control type='text' readOnly/>
                 <InputGroup.Append>
                     <Button variant="outline-secondary">Button</Button>
                 </InputGroup.Append>

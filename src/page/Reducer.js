@@ -39,23 +39,27 @@ export function pageReducer(state = initialPageState, action) {
       return { ...state, error: action.payload.message, isFetching: false }
 
     case ADD_CONTROL:
-      state.controls.forEach(control => {
-        console.log('Control ' + control.name);
-      });
       return { ...state, controls: 
         [...state.controls, 
-          {'id':action.payload, 'name':'field'+action.payload, 'type':state.controltype, 'value':''}
+          {'id':action.payload, 'name':'field'+action.payload, 'type':state.controltype, 'value':null}
         ], isFetching: false }
 
-    case 'rrf/change':
-      console.log('Change ' + action.model + ' ' + action.payload)
+    case 'CHANGE_INPUT':
+      console.log('CHANGE_INPUT ' + action.model + ' ' + action.payload)
       if(action.model == 'page.controltype')
       {
         return { ...state, controltype: action.payload, isFetching: false }
       }
-      else if(action.model == 'page.radio')
+      else
       {
-        return { ...state, radio: action.payload, isFetching: false }
+        state.controls.forEach(control => {
+          if(action.model == control.name) {
+            control.value = action.payload;
+            //console.log('Control ' + control.name + ': ' + control.value);
+          }
+        });
+
+        return { ...state, isFetching: false }
       }
 
     default:

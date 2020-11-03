@@ -11,7 +11,7 @@ export function changeInputAction(name, value) {
   return (dispatch, getState) => {  
     console.log('changeInputAction ' + name + ' ' + value);
     
-    dispatch({ type: 'rrf/change', model: name, payload: value });
+    dispatch({ type: 'CHANGE_INPUT', model: name, payload: value });
   }
 }
 
