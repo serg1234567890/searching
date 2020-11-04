@@ -1,8 +1,11 @@
 export class Validation {
-    static validate(page){
-        console.log(page);
-        if(page.singlelinetext.length < 5) return false
-
-        return true
+    static check(controls){
+        controls.forEach(control => {
+            switch(control.type) {
+                case 'text':
+                    if(!control.value) control.error = 'Must not be emppty!';
+                    break;
+            }
+        });
     }
 }

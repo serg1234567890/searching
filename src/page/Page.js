@@ -6,24 +6,36 @@ import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
+import { Validation } from '../services/Validation';
+
 
 export class Page extends React.Component {
   componentDidMount() {
+    console.log('componentDidMount')
     this.props.getControls();
   }
+
   changeInputAction = (name, value) => { 
     this.props.changeInputAction(name, value);
   }    
   removeInputAction = (name) => { 
     this.props.removeInputAction(name);
   }    
-  onSubmitClick = () => {
-    this.props.onSubmitClick()
+  onDefaultClick = () => {
+    this.props.getDefault()
+  }
+  onClearDB = () => {
+    this.props.clearDB()
+  }
+  onSaveClick = () => {
+    //Validation.check(controls)
+  
+    this.props.saveControls()
   }
   onAddClick = () => {
     this.props.addControl()
   }
-
+  
   renderButton = () => {
     const { controltype, singlelinetext } = this.props
     const onChangeSelect = e => { this.changeInputAction(e.target.name, e.target.value); }    
@@ -62,34 +74,35 @@ export class Page extends React.Component {
       return <p>Loading...</p>
     } else {
       return <Container fluid><hr/>
-          <Button className="btn" onClick={this.onSubmitClick}>Restore default</Button>
+          <Button className="btn" onClick={this.onClearDB}>Clear DB</Button>
+          <Button className="btn" onClick={this.onSaveClick}>Save</Button>
           {controls.map(control =>
                     <Submission model='searching' 
-                    key={control.id} type={control.type} modelname={control.name} id={control.id} value={this.convertValue(control.type, control.value)}
-                     changeInputAction={this.changeInputAction} removeInputAction={this.removeInputAction} />
+                    key={control.id} 
+                    type={control.type} 
+                    modelname={control.name} 
+                    id={control.id} 
+                    controlvalue={this.convertValue(control.type, control.value)}
+                    changeInputAction={this.changeInputAction} 
+                    removeInputAction={this.removeInputAction} />
                 )}
         </Container>
     }
   }
-  convertValue(type, value){
-    if(value==null) return;
-    if(type=='date') {
-      const day = value.substr(0, 2)
-      const month = value.substr(2, 2) - 1
-      const year = value.substr(4, 4)
+  convertValue(type, val){
+    if(type=='date' && val!=null && (''+val).length==8) {
+      const day = val.substr(0, 2)
+      const month = val.substr(2, 2) - 1
+      const year = val.substr(4, 4)
       var date = new Date(year, month, day)
       return date
     }
-    else if(type=='checkbox') {
-      return value == 'true';
-    }
-    else return value
+    else return val
   }
   render() {
     const { controls, isFetching, error } = this.props
 
-    console.log('isFetching ' + isFetching);
-    console.log(controls);
+    console.log(controls)
 
     return (
       <div className="page">
@@ -104,12 +117,13 @@ Page.propTypes = {
   controltype: PropTypes.string,
   controls: PropTypes.any,
   lastindex: PropTypes.number,
-  addControl: PropTypes.func.isRequired,
-  onSubmitClick: PropTypes.func.isRequired,
   error: PropTypes.string,
   isFetching: PropTypes.bool.isRequired,
+  addControl: PropTypes.func.isRequired,
+  getDefault: PropTypes.func.isRequired,
   changeInputAction: PropTypes.func.isRequired,
   removeInputAction: PropTypes.func.isRequired,
-  getControls: PropTypes.func.isRequired
+  getControls: PropTypes.func.isRequired,
+  saveControls: PropTypes.func.isRequired
 }
 
