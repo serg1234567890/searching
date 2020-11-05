@@ -8,10 +8,21 @@ import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import { Validation } from '../services/Validation';
 
-
 export class Page extends React.Component {
   componentDidMount() {
     this.props.getControls();
+ 
+    const signalR = require("@aspnet/signalr");
+    let connection = new signalR.HubConnectionBuilder()
+        .withUrl("http://localhost:5000/chat")
+        .build();
+     
+    connection.on("send", data => {
+        console.log(data);
+    });
+     
+    connection.start()
+        .then(() => connection.invoke("send", "Hello"));
   }
   changeInputAction = (name, value) => { 
     this.props.changeInputAction(name, value);
