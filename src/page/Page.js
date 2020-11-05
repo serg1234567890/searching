@@ -11,26 +11,16 @@ import { Validation } from '../services/Validation';
 
 export class Page extends React.Component {
   componentDidMount() {
-    console.log('componentDidMount')
     this.props.getControls();
   }
-
   changeInputAction = (name, value) => { 
     this.props.changeInputAction(name, value);
   }    
   removeInputAction = (name) => { 
     this.props.removeInputAction(name);
   }    
-  onDefaultClick = () => {
-    this.props.getDefault()
-  }
   onClearDB = () => {
     this.props.clearDB()
-  }
-  onSaveClick = () => {
-    //Validation.check(controls)
-  
-    this.props.saveControls()
   }
   onAddClick = () => {
     this.props.addControl()
@@ -73,9 +63,9 @@ export class Page extends React.Component {
     if (isFetching) {
       return <p>Loading...</p>
     } else {
+      Validation.check(controls)
       return <Container fluid><hr/>
-          <Button className="btn" onClick={this.onClearDB}>Clear DB</Button>
-          <Button className="btn" onClick={this.onSaveClick}>Save</Button>
+          <Button className="btn" onClick={this.onClearDB}>Clear DB and load defaults</Button>
           {controls.map(control =>
                     <Submission model='searching' 
                     key={control.id} 
@@ -83,6 +73,7 @@ export class Page extends React.Component {
                     modelname={control.name} 
                     id={control.id} 
                     controlvalue={this.convertValue(control.type, control.value)}
+                    error={control.error}
                     changeInputAction={this.changeInputAction} 
                     removeInputAction={this.removeInputAction} />
                 )}
@@ -100,10 +91,6 @@ export class Page extends React.Component {
     else return val
   }
   render() {
-    const { controls, isFetching, error } = this.props
-
-    console.log(controls)
-
     return (
       <div className="page">
         {this.renderButton()}
@@ -116,7 +103,6 @@ export class Page extends React.Component {
 Page.propTypes = {
   controltype: PropTypes.string,
   controls: PropTypes.any,
-  lastindex: PropTypes.number,
   error: PropTypes.string,
   isFetching: PropTypes.bool.isRequired,
   addControl: PropTypes.func.isRequired,

@@ -14,22 +14,20 @@ export class Submission extends Component {
     render() {
         const { type, modelname, id, controlvalue, error, changeInputAction, removeInputAction } = this.props
         const controlname = 'div' + id;
+        const errorclassname = error!=null?'controlerror':'';
         const onChangeRadio = (e, id) => { changeInputAction(id, ''+e.target.value); }    
         const onChangeCheckbox = (e, id) => { changeInputAction(id, ''+e.target.checked); }    
         const onChangeSelect = (e, id) => { changeInputAction(id, ''+e.target.value); }    
         const onChangeText = (e, id) => { changeInputAction(id, ''+e.target.value); }    
         const onChangeDate = (startDate, id) => {
-            //console.log(model.modelname, startDate);
             if(startDate!=null)
             {
-                console.log('startDate ' + startDate)
                 var d = new Date(startDate);
                 var day = '' +d.getDate();
                 if(day.length == 1) day = '0' + day;
                 var month = '' +(d.getMonth()+1);
                 if(month.length == 1) month = '0' + month;
                 var s = ''+day+month+d.getFullYear();
-                console.log('Action date ' +s)
                 this.setState({ s });
                 changeInputAction(id, s);
             }
@@ -38,20 +36,21 @@ export class Submission extends Component {
     
         switch(type) {
             case 'text':
-                return (
+                return (<InputGroup>
                     <InputGroup>
                         <InputGroup.Prepend>
                         <InputGroup.Text>{modelname}</InputGroup.Text>
                         </InputGroup.Prepend>
-                        <Form.Control type='text' model={modelname} value={controlvalue?controlvalue:''} onChange={(e) => onChangeText(e, id)} />
+                        <Form.Control className={errorclassname} type='text' model={modelname} value={controlvalue?controlvalue:''} onChange={(e) => onChangeText(e, id)} />
                         <InputGroup.Append>
                             <Button variant="outline-secondary" onClick={(e) => onRemove(id)}>Remove</Button>
                         </InputGroup.Append>
-                        <span style={{color: "red"}}>{error}</span>
+                    </InputGroup>
+                    <Form.Label className='controlerrortext'>{error}</Form.Label>
                     </InputGroup>
                 )
             case 'textarea':
-                return (
+                return (<InputGroup>
                     <InputGroup>
                         <InputGroup.Prepend>
                         <InputGroup.Text>{modelname}</InputGroup.Text>
@@ -60,6 +59,8 @@ export class Submission extends Component {
                         <InputGroup.Append>
                             <Button variant="outline-secondary" onClick={(e) => onRemove(id)}>Remove</Button>
                         </InputGroup.Append>
+                    </InputGroup>
+                    <Form.Label className='controlerrortext'>{error}</Form.Label>
                     </InputGroup>
                 )
             case 'select':
@@ -81,16 +82,18 @@ export class Submission extends Component {
                     </InputGroup>
                 )
             case 'date':
-                return (
+                return (<InputGroup>
                     <InputGroup>
                         <InputGroup.Prepend>
                         <InputGroup.Text>{modelname}</InputGroup.Text>
                         </InputGroup.Prepend>
-                        <DatePicker className='form-control datepicker' dateFormat="dd.MM.yyyy"
+                        <DatePicker className='form-control datepicker {{errorclassname}}' dateFormat="dd.MM.yyyy"
                             selected={controlvalue} onChange={(date) => onChangeDate(date, id)} />
                         <InputGroup.Append>
                             <Button variant="outline-secondary" onClick={(e) => onRemove(id)}>Remove</Button>
                         </InputGroup.Append>
+                    </InputGroup>
+                    <Form.Label className='controlerrortext'>{error}</Form.Label>
                     </InputGroup>
                 )
             case 'radio':

@@ -12,7 +12,6 @@ class PageContainer extends React.Component {
         controls={page.controls}
         isFetching={page.isFetching}
         error={page.error}
-        lastindex={page.lastindex}
         getDefault={getDefault}
         addControl={addControl}
         changeInputAction={changeInputAction}
