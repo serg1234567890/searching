@@ -11,6 +11,10 @@ export class Validation {
                         if(!control.value || control.value && control.value.length==0) control.error = 'Must not be empty!'
                         break
                 case 'date':
+                    if(!control.value) {
+                        control.error = 'Must not be empty!'
+                        break
+                    }
                     const day = control.value.substr(0, 2)
                     const month = control.value.substr(2, 2)-1
                     const year = control.value.substr(4, 4)

@@ -12,11 +12,11 @@ export class Httpservice {
             body: JSON.stringify(body) // body data type MUST !!! match "Content-Type" header
         };
         const fetchdata = async() => {
-            if(resulttype == 'json') return await( await fetch('http://localhost:5000/' + cmd + '?t=' + Date.now(), postsettings)).json();
-            else  return await( await fetch('http://localhost:5000/' + cmd + '?t=' + Date.now(), postsettings)).text();
+            if(resulttype == 'json') return await( await fetch(global.config.host + cmd + '?t=' + Date.now(), postsettings)).json();
+            else  return await( await fetch(global.config.host + cmd + '?t=' + Date.now(), postsettings)).text();
         }
         return fetchdata();
-        //var data = fetch('http://127.0.0.1:5000/' + cmd, postsettings)
+        //var data = fetch(global.config.host + cmd, postsettings)
         //    .then(response => response.json())
         //return data;
     }
@@ -31,7 +31,7 @@ export class Httpservice {
             referrer: 'no-referrer', // no-referrer, *client
         };
         const fetchdata = async() => {
-            return await( await fetch('http://localhost:5000/' + cmd + '?t=' + Date.now(), getsettings)).json();
+            return await( await fetch(global.config.host + cmd + '?t=' + Date.now(), getsettings)).json();
         }
         return fetchdata();
     }

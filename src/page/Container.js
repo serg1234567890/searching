@@ -1,17 +1,20 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Page } from './Page'
-import { getDefault, addControl, changeInputAction, removeInputAction, getControls, saveControls, clearDB } from './Actions'
+import { getDefault, addControl, changeInputAction, removeInputAction, getControls, saveControls, clearDB ,sendSignalAction } from './Actions'
 
 class PageContainer extends React.Component {
   render() {
-    const { page, getDefault, addControl, changeInputAction, removeInputAction, getControls, saveControls, clearDB } = this.props
+    const { page, getDefault, addControl, changeInputAction, removeInputAction, getControls, saveControls, clearDB, sendSignalAction } = this.props
     return (
       <Page
         controltype={page.controltype}
         controls={page.controls}
         isFetching={page.isFetching}
         error={page.error}
+        signalRConnection={page.signalRConnection}
+        sendSignal={page.sendSignal}
+        sendSignalAction={sendSignalAction}
         getDefault={getDefault}
         addControl={addControl}
         changeInputAction={changeInputAction}
@@ -32,6 +35,7 @@ const mapStateToProps = store => {
 
 const mapDispatchToProps = dispatch => {
   return {
+    sendSignalAction: () => dispatch(sendSignalAction()),
     getDefault: () => dispatch(getDefault()),
     addControl: () => dispatch(addControl()),
     getControls: () => dispatch(getControls()),

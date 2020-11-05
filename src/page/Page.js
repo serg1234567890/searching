@@ -11,18 +11,6 @@ import { Validation } from '../services/Validation';
 export class Page extends React.Component {
   componentDidMount() {
     this.props.getControls();
- 
-    const signalR = require("@aspnet/signalr");
-    let connection = new signalR.HubConnectionBuilder()
-        .withUrl("http://localhost:5000/chat")
-        .build();
-     
-    connection.on("send", data => {
-        console.log(data);
-    });
-     
-    connection.start()
-        .then(() => connection.invoke("send", "Hello"));
   }
   changeInputAction = (name, value) => { 
     this.props.changeInputAction(name, value);
@@ -102,6 +90,8 @@ export class Page extends React.Component {
     else return val
   }
   render() {
+    const { sendSignal } = this.props
+    if(sendSignal) this.props.sendSignalAction()
     return (
       <div className="page">
         {this.renderButton()}
@@ -112,6 +102,9 @@ export class Page extends React.Component {
 }
 
 Page.propTypes = {
+  signalRConnection: PropTypes.any,
+  sendSignal: PropTypes.bool,
+  sendSignalAction: PropTypes.func,
   controltype: PropTypes.string,
   controls: PropTypes.any,
   error: PropTypes.string,

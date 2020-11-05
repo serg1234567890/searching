@@ -10,6 +10,12 @@ const defaultlist=[
   {'id':null,'name':'field','type':'checkbox','value':'true','error':null}
 ]
 
+export function sendSignalAction() {
+  return (dispatch) => {
+    dispatch({ type: 'SEND_SIGNAL' })
+  }
+}
+
 export function getControls() {
   return (dispatch) => {  
     dispatch({ type: 'GET_LIST_CONTROLS' })
@@ -60,16 +66,17 @@ export function changeInputAction(id, value) {
   return (dispatch, getState) => {  
     var page = getState().page
     if(id!='page.controltype'){
-      Httpservice.post('api/search/change', {id:id, type:page.controltype, value:value} )
+      Httpservice.post('api/search/change', {id:id, type:page.controltype, value:value}, 'json' )
+      .then(data => dispatch({ type: 'CHANGE_INPUT', model: data.id, payload: value }))
     }
-    dispatch({ type: 'CHANGE_INPUT', model: id, payload: value })
+    else dispatch({ type: 'CHANGE_INPUT', model: id, payload: value })
   }
 }
 
 export function removeInputAction(id) {
   return (dispatch) => {
-    Httpservice.post('api/search/remove', {id:id})
-    dispatch({ type: 'REMOVE_INPUT', model: id })
+    Httpservice.post('api/search/remove', {id:id}, 'json')
+    .then(data => dispatch({ type: 'REMOVE_INPUT', model: data.id }))
   }
 }
 
